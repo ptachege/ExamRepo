@@ -1,0 +1,235 @@
+{% extends 'Lux/base.html' %}
+{% load static %}
+{% block header %}
+<script src="{% static 'Lux/global_assets/js/main/jquery.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/main/bootstrap.bundle.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/loaders/blockui.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/forms/selects/select2.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/forms/styling/uniform.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/demo_pages/form_layouts.js '%}"></script>
+
+{% endblock header %}
+
+{% block body %}
+<div class="container my-4">
+	<div class="row">
+		<a href="{% url 'Lux:index' %}" class="btn btn-outline-dark btn-sm ml-auto"
+			style="margin-right: 20px; margin-bottom: 10px;border-radius: 5px;">
+			<i class="icon-arrow-left15 mr-1"></i>
+			Go
+			Back</a>
+	</div>
+	<div class="row">
+		<div class="col-md-10 offset-md-1">
+
+				<div class="card my-2">
+					<div class="card-body">
+					<ul class="nav nav-tabs nav-tabs-bottom border-bottom-0 nav-justified">
+						<li class="nav-item"><a href="#bottom-justified-divided-tab1" class="nav-link active" data-toggle="tab"><i class="icon-pulse2 mr-2"></i>Upload</a></li>
+						<li class="nav-item"><a href="#bottom-justified-divided-tab2" class="nav-link" data-toggle="tab"> <i class="icon-history mr-2"></i> My Contributions</a></li>
+					</ul>
+
+					<div class="tab-content">
+						<div class="tab-pane fade show active" id="bottom-justified-divided-tab1">
+													<form action="" method="POST" enctype="multipart/form-data">
+							{% csrf_token %}
+							<fieldset>
+								<legend class="font-weight-semibold" style="font-size: 20px;"><i class="icon-cloud-upload2 mr-2"
+										style="font-size: 20px;"></i> Upload Paper
+								</legend>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>University:</label>
+											<select name="university" id="University" required data-placeholder="Select University" class="form-control form-control-select2" data-fouc>
+												<option></option>
+												  	<option value="">-- select one --</option>
+													<option value="Moi">Moi University</option>
+													<option value="Tuk">TUK</option>
+													<option value="UON">UON</option>
+												<!-- <option value="UOE">UOE</option> -->
+											</select>
+
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Course:</label>
+											<select name="course_name" required data-placeholder="Select Course"
+												class="form-control  form-control-select2" data-fouc>
+												<option></option>
+												<option value="Computer Science">Computer Science</option>
+												<option value="Acturial Science">Acturial Science</option>
+												<option value="BioChestry">BioChestry</option>
+												<option value="Bacholor of Science">Bacholor of Science</option>
+												<option value="Bacholor of Science Education">Bacholor of Science Education</option>
+												<option value="Applied Statistics">Applied Statistics</option>
+												<option value="MicroBiology">MicroBiology</option>
+												
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Unit Name:</label>
+											<input type="text" required name="unit_name" placeholder="Internet Application"
+												class="form-control border-teal border-1">
+
+											
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Semester:</label>
+											<select name="unit_year" id="unit_year" required data-placeholder="Select Semester" class="form-control form-control-select2" data-fouc>
+												<option></option>
+												<option value="1.1">1.1</option>
+												<option value="1.2">1.2</option>
+												<option value="2.1">2.1</option>
+												<option value="2.2">2.2</option>
+												<option value="3.1">3.1</option>
+												<option value="3.2">3.2</option>
+												<option value="4.1">4.2</option>
+												<option value="4.2">4.2</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Unit Code:</label>
+											<input type="text" required name="unit_code" placeholder="COM 200"
+												class="form-control border-teal border-1">
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Exam Year:</label>
+											<select name="exam_year" id="exam_year" required data-placeholder="Select Year" class="form-control form-control-select2" data-fouc>
+												<option></option>
+												<option value="2010">2010</option>
+												<option value="2011">2011</option>
+												<option value="2012">2012</option>
+												<option value="2013">2013</option>
+												<option value="2014">2014</option>
+												<option value="2015">2015</option>
+												<option value="2016">2016</option>
+												<option value="2017">2017</option>
+												<option value="2018">2018</option>
+												<option value="2019">2019</option>
+												<option value="2020">2020</option>
+												<option value="2021">2021</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="d-block">File:</label>
+											<input type="file" required name="unit_file" class="form-input-styled" data-fouc>
+											<span class="form-text text-muted">Accepted formats: pdf,.docx,jpeg 30Mb</span>
+										</div>
+									</div>
+								</div>
+								<div class="text-right">
+									<button type="submit" class="btn btn-primary">Submit form <i
+									class="icon-paperplane ml-2"></i></button>
+								</div>
+
+
+							</fieldset>
+						</form>
+		
+						</div>
+
+						<div class="tab-pane fade" id="bottom-justified-divided-tab2">
+
+							<div class="table-responsive">
+								<table class="table datatable-basic">
+									<thead>
+										
+											<tr>
+											<th><b>#</b></th>
+												<th><b>Course Name</b></th>
+												<th><b>Unit Name</b></th>
+												<th><b>Year</b></th>
+												<th><b>File</b></th>
+												<th><b>Status</b></th>
+										</tr>
+																	
+									</thead>
+									<tbody>
+										{% for sample in my_contributions %}
+
+
+										<tr>
+											<td>{{forloop.counter}}</td>
+											<td>{{sample.course_name}}</td>
+											<td>{{sample.unit_name}}</td>
+											<td>{{sample.unit_year}}</td>
+											<td>
+												<a href="{{sample.unit_file.url}}" style="color: black;">
+													<i class="icon-cloud-download2"></i>
+												</a>
+											</td>
+											<td class="text-center">
+												{% if sample.is_validate %}
+													<span class="badge badge-success">Approved</span>									  
+												{% else %}
+												<span class="badge badge-warning">Pending</span>						
+												{% endif %}												
+											</td>
+										</tr>
+
+										{%endfor%}
+																
+									</tbody>
+								</table>				
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function () {
+$("#University").change(function () {
+	// alert('this');
+	var val = $(this).val();
+	if (val == "Moi") {
+		console.log(val);
+		$("#campus").html(
+			"<option value='Moi Main Campus'>Moi Main Campus</option><option value='Anex Campus'>Anex Campus</option>");
+		} else if (val == "Tuk") {
+		$("#campus").html(
+			"<option value='TUK Main Campus'>TUK Main Campus</option><option value='Tuk Mombasa'>Tuk Mombasa</option>");
+		} else if (val == "UON") {
+			$("#campus").html(
+				"<option value='UON Main Campus'>UON Main Campus</option><option value='UON Mombasa'>UON Mombasa</option>");
+		} else if (val == "item0") {
+			$("#size").html("<option value=''>--select one--</option>");
+		}
+});
+});
+
+
+</script>
+
+{% block scripts %}
+{% endblock scripts %}
+
+{% endblock body %}

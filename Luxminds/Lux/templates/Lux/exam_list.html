@@ -1,0 +1,80 @@
+{% extends 'Lux/base.html' %}
+{% load static %}
+{% block all_exams_active %}active{% endblock all_exams_active %}
+{% block header %}
+<script src="{% static 'Lux/global_assets/js/main/jquery.min.js' %}"></script>
+<script src="{% static 'Lux/global_assets/js/main/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/loaders/blockui.min.js' %}"></script>
+<script src="{% static 'Lux/global_assets/js/demo_pages/datatables_basic.js' %}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
+
+
+
+{% endblock header %}
+
+{% block body %}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card my-4">
+				<div class="card-header header-elements-inline" style="background-color:rgb(50,65,72);color: #fff;">
+					<h5 class="card-title"><i class="icon-books"></i> &nbsp;All Exams</h5>
+					<div class="header-elements">
+						<div class="list-icons">
+							<a href="{% url 'Lux:index' %}" class="btn btn-outline-dark btn-sm ml-auto"
+								style="margin-right: 20px; margin-bottom: 10px;border-radius: 5px; color: white; border-color: white;">
+								<i class="icon-arrow-left15 mr-1"></i>
+								Go
+								Back</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card my-4">
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table datatable-basic">
+							<thead>
+								
+									<tr>
+									<th><b>#</b></th>
+										<th><b>University</b></th>
+										<th><b>Course Name</b></th>
+										<th><b>Unit Name</b></th>
+										<th><b>Semister</b></th>
+										<th><b>File</b></th>
+								</tr>
+															
+							</thead>
+							<tbody>
+								{% for exam in all_exams %}
+
+
+								<tr>
+									<td>{{forloop.counter}}</td>
+									<td>{{exam.university}}</td>
+									<td>{{exam.course_name}}</td>
+									<td>{{exam.unit_name}}</td>
+									<td>{{exam.unit_year}}</td>
+									<td class="">
+										<a href="{{exam.unit_file.url}}" style="color: black;">
+											<i class="icon-cloud-download2"></i>
+										</a>
+									</tr>
+
+								{%endfor%}
+														
+							</tbody>
+						</table>			
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+{% block scripts %}
+{% endblock scripts %}
+
+{% endblock body %}

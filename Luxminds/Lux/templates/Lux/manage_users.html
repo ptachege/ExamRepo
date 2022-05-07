@@ -1,0 +1,116 @@
+{% extends 'Lux/base.html' %}
+{% load static %}
+{% block header %}
+<script src="{% static 'Lux/global_assets/js/main/jquery.min.js' %}"></script>
+<script src="{% static 'Lux/global_assets/js/main/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/loaders/blockui.min.js' %}"></script>
+<script src="{% static 'Lux/global_assets/js/demo_pages/datatables_basic.js' %}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
+
+
+
+{% endblock header %}
+
+{% block body %}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card my-4">
+				<div class="card-header header-elements-inline" style="background-color:rgb(50,65,72);color: #fff;">
+					<h5 class="card-title"><i class="icon-user-tie"></i> &nbsp;All Users</h5>
+					<div class="header-elements">
+						<div class="list-icons">
+							<a href="{% url 'Lux:index' %}" class="btn btn-outline-dark btn-sm ml-auto"
+								style="margin-right: 20px; margin-bottom: 10px;border-radius: 5px; color: white; border-color: white;">
+								<i class="icon-arrow-left15 mr-1"></i>
+								Go
+								Back</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card my-4">
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table datatable-basic">
+							<thead>
+								
+									<tr>
+									<th><b>#</b></th>
+										<th><b>Username</b></th>
+										<th><b>Email</b></th>
+										<th><b>University</b></th>
+										<th><b>Status</b></th>
+										<th><b>Action</b></th>
+										
+								</tr>
+															
+							</thead>
+							<tbody>
+								{% for user in all_users %}
+
+
+								<tr>
+									<td>{{forloop.counter}}</td>
+									<td>{{user.first_name}}  </td>
+									<td>{{user.email}}</td>
+									<td>{{user.userprofile.university}}</td>
+									<td>
+										
+										{% if user.is_staff and not user.is_superuser %}
+											<span class="badge badge-primary">
+												Admin
+											</span>											
+										{% endif %}
+
+										{% if user.is_staff and user.is_superuser %}
+										<span class="badge badge-primary">
+										 <i class="icon-medal-star"></i>	Superuser
+										</span>
+										<a href="{% url 'Lux:view_userprofile' user.id %}" style="color: black;" class="ml-2"><i class="icon-eye2"></i></a>
+										{% endif %}
+										{% if not user.is_staff and not user.is_superuser %}
+										<span class="badge badge-secondary">
+											<i class="icon-shield2"></i> Limited
+										</span>
+										<a href="{% url 'Lux:view_userprofile' user.id %}" style="color: black;" class="ml-2"><i class="icon-eye2"></i></a>
+										{% endif %}
+											
+									</td>
+									<td>
+										
+										{% if user.is_active %}
+										<a href="{% url 'Lux:block_user' user.id %}">
+											
+											<span class="badge badge-danger">
+												<i class="icon-blocked" style="font-size: 10px;"></i> Block
+											</span>
+										</a>
+										{% else %}
+										<a href="{% url 'Lux:block_user' user.id %}">
+										<span class="badge badge-success">
+											<i class="icon-checkmark4" style="font-size: 10px;"></i> Unblock
+										</span>
+										</a>
+										{% endif %}
+											
+									</td>
+								
+									</tr>
+
+								{%endfor%}
+														
+							</tbody>
+						</table>			
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+{% block scripts %}
+{% endblock scripts %}
+
+{% endblock body %}

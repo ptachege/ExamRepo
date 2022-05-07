@@ -1,0 +1,244 @@
+{% extends 'Lux/base.html' %}
+{% load static %}
+{% block header %}
+<script src="{% static 'Lux/global_assets/js/main/jquery.min.js' %}"></script>
+<script src="{% static 'Lux/global_assets/js/main/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/loaders/blockui.min.js' %}"></script>
+<script src="{% static 'Lux/global_assets/js/demo_pages/datatables_basic.js' %}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/tables/datatables/datatables.min.js' %}"></script>
+
+<style>
+	/*/////////////////////////////////*/
+/*/////////  chat styles  /////////*/
+/*/////////////////////////////////*/
+.chat
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.chat li
+{
+    margin-bottom: 40px;
+    padding-bottom: 5px;
+    /* border-bottom: 1px dotted #B3A9A9; */
+    margin-top: 10px;
+    width: 80%;
+}
+
+
+.chat li .chat-body p
+{
+    margin: 0;
+    /* color: #777777; */
+}
+
+
+.chat-care
+{
+    overflow-y: scroll;
+    height: 350px;
+}
+.chat-care .chat-img
+{
+    width: 50px;
+    height: 50px;
+}
+.chat-care .img-circle
+{
+    border-radius: 50%;
+}
+.chat-care .chat-img
+{
+    display: inline-block;
+}
+.chat-care .chat-body
+{
+    display: inline-block;
+    max-width: 80%;
+    border-radius: 12.5px;
+    padding: 15px;
+	color: black;
+}
+
+.chat-body-right{
+	    background-color: #dcf8c6;
+}
+.chat-body-left{
+	    background-color: #fff;
+		border: solid 1px rgb(170, 168, 168);
+}
+.chat-care .chat-body strong
+{
+  color: #0169DA;
+}
+
+.chat-care .admin
+{
+    text-align: right ;
+    float: right;
+}
+.chat-care .admin p
+{
+    text-align: left ;
+}
+.chat-care .agent
+{
+    text-align: left ;
+    float: left;
+}
+.chat-care .left
+{
+    float: left;
+}
+.chat-care .right
+{
+    float: right;
+}
+
+.clearfix {
+  clear: both;
+}
+
+
+
+
+::-webkit-scrollbar-track
+{
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+    width: 12px;
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+    box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #555;
+}
+</style>
+
+
+{% endblock header %}
+
+{% block body %}
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card my-4">
+				<div class="card-header header-elements-inline" style="background-color:rgb(50,65,72);color: #fff;">
+					<h4 class="card-title"><i class="icon-bubbles2"></i> &nbsp;Chat Room</h4>
+					<div class="header-elements">
+						<a href="{% url 'Lux:dashboard' %}" class="btn btn-sm ml-auto"
+			style="margin-right: 20px;border-radius: 5px; color: white; border-color: #fff;">
+			<i class="icon-arrow-left15 mr-1"></i>
+			Go
+			Back</a>
+					</div>
+				</div>
+			</div>
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="card">
+									<div class="card-header text-center">
+										<h6>All Chats</h6>
+									</div>
+									<div class="card-body chat-care" id="conversation">
+										<ul class="chat">
+											{% for chat in all_chats  %}
+											
+											
+											{% if chat.user != request.user  %}
+																						
+											
+											<li	i class="agent clearfix">
+												<span class="chat-img left clearfix mx-2">
+													<img src="{{chat.user.userprofile.avatar.url}}" style="width: 50px; height: 50px;" alt="Agent" class="img-circle img-responsive" />
+													
+												</span>
+												<div class="chat-body chat-body-left clearfix">
+													<div class="header clearfix">
+														<strong class="primary-font">{{chat.user.username}}</strong> 
+														
+													</div>
+													<p>
+														{{chat.message}}
+													</p>
+
+													<small class="right text-muted">
+														{{chat.time_send|timesince}} ago</small>
+												</div>
+											</li>
+											{% else %}
+											<li class="admin clearfix">
+												<span class="chat-img right clearfix  mx-2">
+													<img src="http://placehold.it/50/FA6F57/fff&text=ME" alt="Admin" class="img-circle" />
+												</span>
+												<div class="chat-body chat-body-right clearfix">
+													<div class="header clearfix">													
+													</div>
+													<p>
+														{{chat.message}}
+													</p>
+													
+													<small class="right text-muted">
+														{{chat.time_send|timesince}} ago</small>
+												</div>
+											</li>
+											{% endif %}
+											{% empty%}
+											<div class="alert alert-warning text-center">
+												There are no chat messages in this chat room. <br>
+												<i class="icon-lock4"></i> Messages send to this room are confidential and should be Non-Valgure
+											</div>
+											{% endfor %}
+										</ul>
+									</div>
+									<div class="card-footer">
+										<form action="" method="post">
+											{% csrf_token %}
+											<div class="input-group">
+												<input id="btn-input" name="message" type="text" required class="form-control input-sm"
+													placeholder="Type your message here..."  style="border-radius: 20px;"/>
+												<span class="input-group-btn ml-3">
+												<button class="btn btn-primary" id="btn-chat">
+													<i class="icon-paperplane " ></i> </button>
+												</span>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+			</div>
+
+		</div>
+
+	</div>
+</div>
+
+<script>
+	
+	$('document').ready(function () {
+
+		function scrollToBottom() {
+			messages = document.getElementById('conversation');
+			messages.scrollTop = messages.scrollHeight;
+		}
+		scrollToBottom();
+
+	});
+
+</script>
+{% block scripts %}
+{% endblock scripts %}
+
+{% endblock body %}

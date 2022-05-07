@@ -1,0 +1,209 @@
+{% extends 'Lux/base.html' %}
+{% load static %}
+
+{% block profile %}active{% endblock profile %}
+{% block header %}
+<script src="{% static 'Lux/global_assets/js/main/jquery.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/main/bootstrap.bundle.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/loaders/blockui.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/notifications/sweet_alert.min.js' %}"></script>
+
+
+<style>
+ 		@media (max-width: 768px) {
+			 .user-img{
+				 width: 200px;
+				 margin-left: auto;
+				 margin-right: auto;
+				 margin-bottom: 30px;
+			 }
+	}
+	.btn-sweet{
+		background: transparent;
+		border: none;
+	}
+	.btn-sweet:focus{
+		outline: none;
+	}
+</style>
+
+{% endblock header %}
+
+{% block body %}
+<div class="container-fluid my-4">
+	<div class="row">
+		<a href="{% url 'Lux:index' %}" class="btn btn-outline-dark btn-sm ml-auto"
+			style="margin-right: 20px; margin-bottom: 10px;border-radius: 5px;">
+			<i class="icon-arrow-left15 mr-1"></i>
+			Go
+			Back</a>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card">
+				<div class="card-header header-elements-inline" style="background-color:rgb(50,65,72);color: #fff;">
+					<h3 class="card-title"><i class="icon-user" style="font-size: 25px;"></i>
+						&nbsp;{{current_user.first_name}} {{current_user.last_name}}'s Profile</h3>
+					<div class="header-elements">
+						<div class="list-icons">
+							<a class="list-icons-item" data-action="reload"></a>
+							<a class="list-icons-item" data-action="remove"></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-5 col-12">
+							<center>
+							<img src="{{current_profile.avatar.url}}" class="img-fluid img-thumbnail user-img" style="border-radius: 30px;" alt="">
+							</center>
+						</div>
+						<div class="col-md-7 ">
+							<div class="container-fluid">
+								<center>
+							<table class="ml-4">
+								<tr>
+									<td style="padding-bottom: 10px;"><b>First Name:</b></td>
+									<td style="padding-bottom: 10px;" class="pl-4">{{current_user.first_name}}</td>
+								</tr>
+								<tr>
+									<td style="padding-bottom: 10px;"><b>Sur Name:</b></td>
+									<td style="padding-bottom: 10px;" class="pl-4">{{current_user.last_name}}</td>
+								</tr>
+								<tr>
+									<td style="padding-bottom: 10px;"><b>University:</b></td>
+									<td class="pl-4" style="padding-bottom: 10px;">{{current_profile.university}}</td>
+								</tr>
+								<tr>
+									<td><b>Campus:</b></td>
+									<td class="pl-4">{{current_profile.campus}}</td>
+								</tr>
+							</table>
+							<a href="{% url 'Lux:edit_profile' %}" class="btn btn-outline-dark btn-sm my-3 ml-4" style="border-radius: 5px;">
+								<i class="icon-pencil5 mr-1"></i> Edit profile</a>
+							</center>
+						</div>
+							</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="card">
+				<div class="card-body">
+					<div class="col-md-12 align-items-center">
+						<table class="ml-4">
+							<tr>
+								<td style="padding-bottom: 10px;"><b>
+									<i class="icon-man-woman mr-1"></i> Current Year:</b></td>
+								<td style="padding-bottom: 10px;" class="pl-4">{{current_profile.current_year}}</td>
+							</tr>
+							<tr>
+								<td style="padding-bottom: 10px;"><b>
+									<i class="icon-phone mr-1"></i> Course:</b></td>
+								<td style="padding-bottom: 10px;" class="pl-4">{{current_profile.course_taking}}</td>
+							</tr>
+							<tr>
+								<td style="padding-bottom: 10px;"><b>
+									<i class="icon-envelop5 mr-1"></i>
+									Email:</b></td>
+								<td style="padding-bottom: 10px;" class="pl-4">{{current_user.email}}</td>
+							</tr>
+							<tr>
+								<td><b>
+									<i class="icon-credit-card mr-1"></i>
+									Id Number:</b></td>
+								<td class="pl-4">Null</td>
+							</tr>
+						</table>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+<!-- 
+<div id="modal_iconified" class="modal fade" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"><i class="icon-menu7 mr-2"></i> &nbsp;Additional Info.</h5>
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+
+			<div class="modal-body">
+				<div class="alert alert-info alert-dismissible alert-styled-left border-top-0 border-bottom-0 border-right-0">
+					<span class="font-weight-semibold">What </span> is the current status?.
+					<button type="button" class="close" data-dismiss="alert">×</button>
+				</div>
+
+				<h6 class="font-weight-semibold"><i class="icon-checkmark2 mr-2" style="color:green;"></i> Option 1.</h6>
+				<p>This signifies that the Tenant is the current occupant of the house. It shows that the 
+					tenant is an active tenant.
+				</p>
+
+				<hr>
+
+				<p><i class="icon-cross2 mr-2" style="color: red;"></i>
+					This signifies that the tenant has leased the house in the past but is not current the 
+					occupant of the same house.
+				</p>
+			</div>
+
+			<div class="modal-footer">
+				<button class="btn btn-link" data-dismiss="modal"><i class="icon-cross2 font-size-base mr-1"></i> Close</button>
+			</div>
+		</div>
+	</div>
+</div> -->
+
+{% block scripts %}
+<script>
+	var SweetAlert = function () {
+
+		var _componentSweetAlert = function() {
+			if (typeof swal == 'undefined') {
+				console.warn('Warning - sweet_alert.min.js is not loaded.');
+				return;
+			}
+			var swalInit = swal.mixin({
+                buttonsStyling: false,
+                confirmButtonClass: 'btn btn-primary',
+                cancelButtonClass: 'btn btn-light'
+            });
+			$('#sweet_warning').on('click', function() {
+            swalInit({
+                title: 'You are about to terminate this Lease. Are you Sure?',
+                text: 'Note that this action is critical!',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Proceed!',
+				position: 'top',
+				
+            });
+        });
+
+		};
+		return {
+        initComponents: function() {
+            _componentSweetAlert();
+        }
+    }
+
+	}();
+
+	document.addEventListener('DOMContentLoaded', function() {
+		SweetAlert.initComponents();
+	});
+
+
+</script>
+{% endblock scripts %}
+
+{% endblock body %}

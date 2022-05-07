@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>LuxMinds</title>
+	{% load static %}
+	<!-- Global stylesheets -->
+	<link rel="shortcut icon" href="{% static 'Lux/images/logo.png' %}" type="image/x-icon">
+	<link href="{% static 'Lux/global_assets/css/icons/icomoon/styles.min.css ' %}" rel="stylesheet" type="text/css">
+	<link href="{% static 'Lux/assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
+	<link href="{% static 'Lux/assets/css/bootstrap_limitless.min.css  '%}" rel="stylesheet" type="text/css">
+	<link href="{% static 'Lux/assets/css/layout.min.css'%}" rel="stylesheet" type="text/css">
+	<link href="{% static 'Lux/assets/css/components.min.css '%}" rel="stylesheet" type="text/css">
+	<link href="{% static 'Lux/assets/css/colors.min.css '%}" rel="stylesheet" type="text/css">
+	<link href="{% static 'Lux/fontawesome-free/css/all.css'%}" rel="stylesheet" type="text/css">
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" />
+
+	<!-- /global stylesheets -->
+
+	<!-- Core JS files -->
+	<script src="{% static 'Lux/global_assets/js/main/jquery.min.js'%}"></script>
+	<script src="{% static 'Lux/global_assets/js/main/bootstrap.bundle.min.js'%}"></script>
+	<script src="{% static 'Lux/global_assets/js/plugins/loaders/blockui.min.js'%}"></script>
+	<!-- /core JS files -->
+
+	<!-- Theme JS files -->
+	<script src="{% static 'Lux/global_assets/js/plugins/visualization/d3/d3.min.js'%}"></script>
+	<script src="{% static 'Lux/global_assets/js/plugins/visualization/d3/d3_tooltip.js'%}"></script>
+	<script src="{% static 'Lux/global_assets/js/plugins/forms/styling/switchery.min.js'%}"></script>
+	<script src="{% static 'Lux/global_assets/js/plugins/forms/selects/bootstrap_multiselect.js'%}"></script>
+	<script src="{% static 'Lux/global_assets/js/plugins/ui/moment/moment.min.js'%}"></script>
+	<script src="{% static 'Lux/global_assets/js/plugins/pickers/daterangepicker.js'%}"></script>
+
+	<script src="{% static 'Lux/assets/js/app.js'%}"></script>
+	<script src="{% static 'Lux/global_assets/js/demo_pages/dashboard.js'%}"></script>
+
+	<script src="{% static 'Lux/global_assets/js/plugins/notifications/pnotify.min.js' %}"></script>
+	<!-- bootstro -->
+	
+	<link rel="stylesheet" href="{% static 'Lux\tourguide.js-master\tourguide.css' %}">	
+
+
+	{% block header %}
+	  
+	{% endblock header %}
+	<!-- /theme JS files -->
+
+	<style>
+		body{
+			background: url('../../static/Lux/images/background.png');
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<!-- Main navbar -->
+	<div class="navbar navbar-expand-md navbar-dark">
+		<div class="navbar-brand">
+			<a href="{% if request.user.is_authenticated %}
+			  /
+			{% else %}
+			{% url 'Lux:login_user' %}	  
+			{% endif %}
+			" class="d-inline-block">
+				<i class="icon-brain mr-2 mb-1" style="font-size: 25px;"></i> LuxMinds
+			</a>
+		</div>
+
+		<div class="d-md-none">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
+				<i class="icon-tree5"></i>
+			</button>
+			<button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
+				<i class="icon-paragraph-justify3"></i>
+			</button>
+		</div>
+
+		<div class="collapse navbar-collapse " id="navbar-mobile">
+			<ul class="navbar-nav ml-md-3 mr-md-auto">
+				<li class="nav-item">
+					<a href="#" class="navbar-nav-link sidebar-control sidebar-main-toggle d-none d-md-block">
+						<i class="icon-paragraph-justify3"></i>
+					</a>
+				</li>
+
+			</ul>
+
+
+			<ul class="navbar-nav">
+
+				<li class="nav-item" >
+					{% if request.user.is_authenticated %}
+					<a href=" {% url 'Lux:logout_user' %} " style="color: rgb(252, 252, 252);" class="nav-link"><i class="icon-switch2"></i> Logout</a>					
+					{% else %}
+					<a href="{% url 'Lux:login_user' %}" style="color: rgb(252, 252, 252);" class="nav-link"><i class="icon-user"></i> Login</a>
+					  
+					{% endif %}
+					
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- /main navbar -->
+
+	<div class="page-content">
+		<!-- Main sidebar -->
+		
+		{% if request.user.is_authenticated %}
+		<div class="sidebar sidebar-dark sidebar-main sidebar-expand-md">
+			<!-- Sidebar mobile toggler -->
+			<div class="sidebar-mobile-toggler text-center">
+				<a href="#" class="sidebar-mobile-main-toggle">
+					<i class="icon-arrow-left8"></i>
+				</a>
+				Navigation
+				<a href="#" class="sidebar-mobile-expand">
+					<i class="icon-screen-full"></i>
+					<i class="icon-screen-normal"></i>
+				</a>
+			</div>
+			<!-- Sidebar content -->
+			<div class="sidebar-content">
+				<!-- Main navigation -->
+				<div class="card card-sidebar-mobile">
+					<ul class="nav nav-sidebar" data-nav-type="accordion">
+
+						<!-- Main -->
+						<li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li>
+						<li class="nav-item" data-tour="step: 1; title: Dashboard; image: {% static 'Lux\images\1.png' %} ; content: The Dashboard gives you a quick stats overview and quick access links.">
+							<a href="{% url 'Lux:dashboard' %}" class="nav-link {% block dashboard_active %}{% endblock dashboard_active %}">
+								<i class="icon-home4"></i>
+								<span>
+									Dashboard
+								</span>
+							</a>
+						</li>
+						<li class="nav-item" data-tour="step: 2; title: All Exams;image: {% static 'Lux\images\3.svg' %} ;content: You can Access all Exams from all universities and courses all at once from this page.">
+							<a href="{% url 'Lux:all_exams' %}" class="nav-link {% block all_exams_active %}{% endblock all_exams_active %}"><i class="icon-books"></i> <span>All Exams</span></a>
+						</li>
+						<li class="nav-item" data-tour="step: 3; title: Suggested Papers;image: {% static 'Lux\images\4.svg' %} ; content: This page gives you exams from your current semester and university as set in your profile.">
+							<a href="{% url 'Lux:suggested_for_you' %}" class="nav-link {% block suggested_for_you %}{% endblock suggested_for_you %}"><i class="icon-brain"></i> <span>Suggested For you</span></a>
+						</li>
+						<li class="nav-item nav-item-submenu" data-tour="step: 4; title: In need for papers from a specific University?; image: {% static 'Lux\images\5.svg' %} ; content: This page gives you generic access to papers from a specific campus">
+							<a href="#" class="nav-link"><i class="icon-library2 example-css-selector" ></i> <span>Universities</span></a>
+							
+							<ul class="nav nav-group-sub" data-submenu-title="Layouts">
+								<li class="nav-item"><a href="{% url 'Lux:moi_university_exams' %}" class="nav-link"><i class="icon-list-unordered"></i> Moi</a></li>
+								<li class="nav-item"><a href="{% url 'Lux:tuk_university_exams' %}" class="nav-link"> <i class="icon-list-unordered"></i> TUK</a></li>
+								<li class="nav-item"><a href="" class="nav-link"> <i class="icon-list-unordered"></i> UOE</a></li>
+								<li class="nav-item"><a href="" class="nav-link"> <i class="icon-list-unordered"></i> . . .</a></li>
+							</ul>
+						</li>
+						<li class="nav-item" data-tour="step: 5; title: Edit Profile;image: {% static 'Lux\images\6.svg' %} ; content: You can edit your profile at any time from this page.">
+							<a href="{% url 'Lux:view_user_profile' %}" class="nav-link {% block profile %}{% endblock profile %}"><i class="icon-user"></i> <span>Profile</span></a>
+						</li>
+						<li class="nav-item" data-tour="step: 5; title: Upload content; image: {% static 'Lux\images\7.svg' %} ; content: Have some papers you'd like to share? use this page to upload them to LuxMinds.">
+							<a href="{% url 'Lux:upload_papers' %}" class="nav-link"><i class="icon-cloud-upload"></i> <span>Upload papers</span></a>
+						</li>
+						
+						{% if request.user.is_superuser %}
+						
+						<li class="nav-item">
+							<a href="{% url 'Lux:pending_approve_papers' %}" class="nav-link"><i class="icon-checkmark2" style="color: green;"></i> <span>Approve Uploads</span></a>
+						</li>
+						<li class="nav-item">
+							<a href="{% url 'Lux:manage_users' %}" class="nav-link"><i class="icon-user-tie" ></i> <span>Manage Users</span></a>
+						</li>
+						{% endif %}
+						<li class="nav-item" data-tour="step: 6; title: Talk to People;image: {% static 'Lux\images\2.png' %}; content: Enter our chat room and talk to other comrades from all over Kenya. Share Ideas.">
+							<a href="{% url 'Lux:chat' %}" class="nav-link"><i class="icon-bubbles2"></i> <span>Public Chat</span></a>
+						</li>
+						<li class="nav-item">
+							<a href="{% url 'Lux:chat' %}" class="nav-link"><i class="icon-exclamation"></i> <span>About</span></a>
+						</li>
+						<li class="nav-item">
+							<a href="{% url 'Lux:chat' %}" class="nav-link"><i class="icon-phone"></i> <span>Contact Us</span></a>
+						</li>
+					</ul>
+				</div>
+				<!-- /main navigation -->
+
+			</div>
+			<!-- /sidebar content -->
+		</div>
+		{% endif %}
+		<!-- Main content -->
+		<div class="content-wrapper">
+		{%if messages%}
+        {% for message in messages %}
+			<script>
+				var Pnotify = function() {
+
+					var _componentPnotify = function() {
+						if (typeof PNotify == 'undefined') {
+							console.warn('Warning - pnotify.min.js is not loaded.');
+							return;
+						}
+					}
+					$(document).ready(function() {
+						new PNotify({
+							title: 'Message notice',
+							text: '{{message}}',
+							addclass: 'bg-{{message.tags}} border-success'
+						});
+						});
+						return {
+						init: function() {
+							_componentPnotify();
+						}
+					}
+				}();
+				document.addEventListener('DOMContentLoaded', function() {
+					Pnotify.init();
+				});
+
+			</script>
+			{%endfor%}
+			{%endif%}
+			{% block body %}
+			  
+			{% endblock body %}
+			<!-- Footer -->
+			<div class="navbar navbar-expand-lg navbar-light">
+				<!-- <div class="text-center d-lg-none w-100">
+					<button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-footer">
+						<i class="icon-unfold mr-2"></i>
+						Footer
+					</button>
+				</div> -->
+
+				<div class="" id="navbar-footer">
+					<span class="navbar-text">
+						&copy; 2021. <a href="#">Covid-19 System</a> by <a href="">PnJKenya</a>
+					</span>
+
+					<ul class="navbar-nav ml-lg-auto float-right">
+						<li class="nav-item"><a href="https://kopyov.ticksy.com/" class="navbar-nav-link" target="_blank"><i class="icon-lifebuoy mr-2"></i> Support</a></li>
+						<li class="nav-item"><a href="http://demo.interface.club/limitless/docs/" class="navbar-nav-link" target="_blank"><i class="icon-file-text2 mr-2"></i> Docs</a></li>
+						<li class="nav-item"><a href="https://themeforest.net/item/limitless-responsive-web-application-kit/13080328?ref=kopyov" class="navbar-nav-link font-weight-semibold"><span class="text-pink-400"><i class="icon-cart2 mr-2"></i> Purchase</span></a></li>
+					</ul>
+				</div>
+			</div>
+			<!-- /footer -->
+		</div>
+	</div>
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" caller-id="" role="dialog"
+    aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <div class="container text-center">
+            <h2 class="modal-title" id="">Terminate Lease</h2>
+          </div>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">x</span>
+          </button>
+        </div>
+        <div class="modal-body confirm-delete">
+          <div class="container text-center">
+            <i class="icon-warning" style="color:red; font-size: 50px;"></i><br>
+            <span>Are you sure you want to Terminate this lease?</span><br>
+            <h3>This action is permanent!</h3>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="container">
+            <button style="float:left;" type="button" class="btn btn-primary btn-sm"
+              data-dismiss="modal">Cancel</button>
+            <button style="float:right;" type="button" class="btn btn-danger btn-sm" data-dismiss="modal"
+              id="confirmDeleteButtonModal">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+	<script>
+		$(document).on('click', '.confirm-delete', function () {
+		  $("#confirmDeleteModal").attr("caller-id", $(this).attr("id"));
+		});
+	
+		$(document).on('click', '#confirmDeleteButtonModal', function () {
+		  var caller = $("#confirmDeleteButtonModal").closest(".modal").attr("caller-id");
+		  window.location = $("#".concat(caller)).attr("href");
+		});
+	</script>
+
+
+		<script src="{% static 'Lux\tourguide.js-master\tourguide.min.js' %}"></script>
+
+		
+		{% if visitor_count == 0 %}
+			<script>
+				var myTour = new Tourguide();
+				myTour.start();
+				</script>
+		{% endif %}
+
+		
+	{% block scripts %}
+	  
+	{% endblock scripts %}
+</body>
+</html>

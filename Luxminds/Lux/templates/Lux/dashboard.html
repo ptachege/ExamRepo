@@ -1,0 +1,275 @@
+{% extends 'Lux/base.html' %}
+{% load static %}
+{% block dashboard_active %}
+active
+{% endblock dashboard_active %}
+{% block header %}
+
+<style>
+      section {
+    display: grid;
+    grid-template-columns: var(--page-margin) [center-start] 1fr [center-end] var(
+        --page-margin
+      );
+  }
+
+  /* section > * {
+    grid-column: center;
+  }
+ */
+  .cards-wrapper {
+    grid-column: center-start / -1;
+    overflow: auto;
+    display: flex;
+    padding-bottom: 1.9em;
+  }
+
+  .cards-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .cards-wrapper .card {
+    background-color: #d0f0ee;
+    color: black;
+    height: 240px;
+    min-width: 240px;
+    margin-right: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+  }
+
+  .cards-wrapper .card p {
+    background-color: rgba(124, 68, 4, 0.932);
+    margin-top: 115px;
+    font-size: 14px;
+    color: white;
+    width: 60px;
+    height: 20px;
+    text-align: center;
+    border-radius: 10px;
+  }
+
+  .cards-wrapper .card p:last-child {
+    margin-right: 0;
+  }
+
+  .cards-wrapper .card p::after {
+    content: "";
+    display: block;
+    min-width: var(--page-margin);
+  }
+
+  .item {
+    position: relative;
+  }
+  .notify-badge {
+    position: absolute;
+    right: 35%;
+    top: 10%;
+    background: green;
+    height: 25px;
+    width: 20px;
+    border-radius: 50%;
+    border: solid 3px white;
+    color: white;
+    padding: 5px 10px;
+  }
+
+  .remove-default-btn:focus {
+    outline: none;
+  }
+
+</style>
+
+
+<link rel="stylesheet" href="{% static 'Lux/assets/css/style.css' %}">
+<script src="{% static 'Lux/global_assets/js/main/jquery.min.js' %}"></script>
+<script src="{% static 'Lux/global_assets/js/main/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/loaders/blockui.min.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+{% endblock header %}
+
+{% block body %}
+       <main>
+           
+           <section class="glass my-3">
+                <div class="row">
+                    <div class="col-md-12">
+                       <div class="container-fluid">
+                            <div class="card" style="background: rgb(50,65,72); color:white;border: none; outline: none; border-left: solid rgb(1, 85, 85) 3px;border-right: solid rgb(1, 85, 85) 3px;">
+                                <div class="card-body">
+                                    <span style="margin: 0 0; border: solid 1px; padding: 8px; border-radius: 20px;box-shadow: 1px 1px 1px rgb(150, 148, 148);">
+                                        <i class="icon-home5 mr-1"></i> Hello {{request.user.first_name}}
+                                    </span>                                    
+                                </div>
+                            </div>
+                       </div>
+                    </div>
+                </div>
+                <div class="container-fluid" style="padding-left: 20px; padding-right: 20px;">
+                    <div class="row">
+                             <div class="col-md-3 col-6">
+                                <div class="card single-cards text-center" style="border-bottom: solid 3px orange;">
+                                    <a href="{% url 'Lux:manage_users' %}" style="color: rgb(39, 38, 38);">
+                                    <div class="card-body">
+                                        <i class="icon-user-tie mb-2" style="font-size: 35px;"> {{total_users}}</i>   
+                                        <h3>
+                                            Users
+                                        </h3>                        
+                                    </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-6">
+                                <div class="card single-cards text-center"  style="border-bottom: solid 3px orange;">
+                                    <a href="{% url 'Lux:all_exams' %}" style="color: rgb(39, 38, 38);">
+                                    <div class="card-body">
+                                        <i class="icon-books mb-2" style="font-size: 35px;"> {{total_papers}}</i>   
+                                        <h3>
+                                            Papers
+                                        </h3>                        
+                                    </div>
+                                </a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-6">
+                                <div class="card single-cards text-center"  style="border-bottom: solid 3px orange;">
+                                    <a href="{% url 'Lux:suggested_for_you' %}" style="color: rgb(39, 38, 38);">
+                                    <div class="card-body">
+                                        <i class="icon-brain mb-2" style="font-size: 35px;"> {{suggested_for_you_count}}</i>   
+                                        <h3>
+                                            Suggested
+                                        </h3>                        
+                                    </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 col-6">
+                                <div class="card single-cards text-center"  style="border-bottom: solid 3px orange;">
+
+                                    <a href="/upload_papers#bottom-justified-divided-tab2" style="color: rgb(39, 38, 38);">
+                                    <div class="card-body">
+                                        <i class="icon-git-branch mb-2" style="font-size: 35px;"> {{my_contributions}}</i>   
+                                        <h3>
+                                            Contributions
+                                        </h3>                        
+                                    </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-8 offset-md-2 text-center">
+                                 <div class="alert alert-warning">
+                                    <h5>Get Exam papers of your choice by strolling</h5>
+                                </div>
+                            </div> -->
+                    
+                            
+                    </div>    
+
+                  
+                    <div class="row">
+                        <div class="col-12 my-2">
+                            <div class="card" style="background: rgb(50,65,72); color:white;">
+                                <div class="card-body text-center">
+                                    <span> <i class="icon-files-empty2"></i> Papers Suggested For you</span>                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    {% if suggested_for_you %}                 
+                    
+                      
+                  
+                    <div class="row">
+                            <section>
+                                <div class="cards-wrapper">
+
+                                    {% for paper  in suggested_for_you  %}
+                                        <div
+                                        class="card"
+                                        style="
+                                            background: white;
+                                            background-size: 100% 100%;
+                                            background-clip: content-box;
+                                            -webkit-background-clip: padding-box;
+                                            background-clip: padding-box;
+                                            margin: 7px 0 0 5px;
+                                            float: left;
+                                            background-size: cover;
+                                            background-position: center center;
+                                            border-bottom: solid 3px teal;
+                                        "
+                                        >
+                                        <h3> <i class="icon-files-empty2"></i> {{paper.course_name}}</h3>
+                                        <h5>{{paper.unit_name}}</h5>
+                                        <h5>{{paper.unit_year}}</h5>
+                                        <h6>
+                                            <i class="icon-cloud-download2 icon-2x"></i>
+                                        </h6>
+                                        </div>
+                                        {% endfor %}
+
+                                        <div
+                                        class="card"
+                                        style="
+                                            background: white;
+                                            background-size: 100% 100%;
+                                            background-clip: content-box;
+                                            -webkit-background-clip: padding-box;
+                                            background-clip: padding-box;
+                                            margin: 7px 0 0 5px;
+                                            float: left;
+                                            background-size: cover;
+                                            background-position: center center;
+                                            border-bottom: solid 3px teal;
+                                        "
+                                        >
+                                        <a href="{% url 'Lux:suggested_for_you' %}" class="btn btn-outline-dark" style="border-radius: 20px;">
+                                           View All
+                                        </a>
+                                        </div>
+                                </div>
+                             </section>
+
+                    </div>
+
+                    {% else %}
+
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <div class="col-md-12 text-center">
+                                            <div class="alert alert-warning">
+                                                <h5>No Suggestions today.</h5>
+                                            </div>
+                                        </div> 
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+
+                    {% endif %}
+                   
+                </div>
+           </section>
+       </main>
+       <div class="circle1"></div>
+       <div class="circle2"></div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% block scripts %}
+{% endblock scripts %}
+
+{% endblock body %}

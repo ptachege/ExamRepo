@@ -1,0 +1,88 @@
+{% extends 'Lux/base.html' %} {% load static %}
+<!-- extra style here -->
+
+{% block extrastyle %}
+
+<script src="{% static 'Lux/global_assets/js/plugins/notifications/bootbox.min.js ' %}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/forms/selects/select2.min.js ' %}"></script>
+
+<script src="{% static 'Lux/global_assets/js/demo_pages/components_modals.js' %}"></script>
+<script src="{% static 'Lux\theme\js\jquery-3.4.1.min.js' %}"></script>
+
+<style>
+  body {
+    padding-top: 90px;
+  }
+</style>
+
+
+{%endblock extrastyle%}
+
+<!-- block body here -->
+{% block body %}
+
+<!-- <a href="" data-toggle="modal" data-target="#welcomemodal" >this</a> -->
+
+<!--modal-->
+<div class="modal fade" id="welcomemodal" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="static">
+  <div class="modal-dialog" role="ducument">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <div class="container">
+          <i class="icon-brain icon-2x mb-3" style="color: grey"></i>
+          <h5 style="font-weight: 400">Welcome to LuxMinds</h5>
+        
+        </div>
+      </div>
+      <div class="modal-body text-center bg-gray-200">
+        <ul style="list-style: none">
+          <li>
+            <p style="font-weight: 200; color: grey">
+              <small>I Agree to all Terms and conditions and that this site uses cookies</small>
+            </p>
+          </li>
+          <li>
+            <p style="font-weight: 200; color: grey">
+              <small>I consent to voluntarily upload clean content to this site at my own will.
+                <span style="color: tomato">Knowledge is power!</span></small>
+            </p>
+          </li>
+          <li>
+            <p style="font-weight: 200; color: grey">
+              <small>Respect others and treat them as you would like to be treated.
+              </small>
+            </p>
+          </li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <div class="container text-center">
+          <a class="btn btn-sm" style="
+              background-color: rgb(9, 52, 59);
+              color: white;
+              font-weight: 400;
+              width: 130px;
+              border-radius: 30px;
+            " href="{% url 'Lux:index' %}" onclick="mine()" id="agree">I AGREE <span id="spinner"></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function mine() {
+    document.getElementById("agree").setAttribute("disabled", true);
+    $("#spinner").addClass("spinner-border  spinner-border-sm");
+  }
+
+</script>
+
+<script>
+  $(document).ready(function () {
+    $("#welcomemodal").modal("show");
+  });
+</script>
+
+
+{% endblock body %}

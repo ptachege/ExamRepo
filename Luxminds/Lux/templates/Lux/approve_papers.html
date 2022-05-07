@@ -1,0 +1,176 @@
+{% extends 'Lux/base.html' %}
+{% load static %}
+{% block header %}
+<script src="{% static 'Lux/global_assets/js/main/jquery.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/main/bootstrap.bundle.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/loaders/blockui.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/forms/selects/select2.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/forms/styling/uniform.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/demo_pages/form_layouts.js '%}"></script>
+
+	<script src="{% static 'Lux/global_assets/js/plugins/forms/styling/switchery.min.js' %}"></script>
+	<script src="{% static 'Lux/global_assets/js/plugins/forms/styling/switch.min.js' %}"></script>
+
+	<script src="{% static 'Lux/global_assets/js/demo_pages/form_checkboxes_radios.js' %}"></script>
+
+
+{% endblock header %}
+
+{% block body %}
+<div class="container-fluid my-4">
+	<div class="row">
+		<a href="{% url 'Lux:index' %}" class="btn btn-outline-dark btn-sm ml-auto"
+			style="margin-right: 20px; margin-bottom: 10px;border-radius: 5px;">
+			<i class="icon-arrow-left15 mr-1"></i>
+			Go
+			Back</a>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+
+				<div class="card my-2">
+					<div class="card-body">
+					<ul class="nav nav-tabs nav-tabs-bottom border-bottom-0 nav-justified">
+						<li class="nav-item"><a href="#bottom-justified-divided-tab1" class="nav-link active" data-toggle="tab"><i class="icon-history mr-2"></i>Pending Approve</a></li>
+						<li class="nav-item"><a href="#bottom-justified-divided-tab2" class="nav-link" data-toggle="tab"> <i class="icon-checkmark2 mr-2" style="color: green;"></i> Public Papers</a></li>
+					</ul>
+
+					<div class="tab-content">
+						<div class="tab-pane fade show active" id="bottom-justified-divided-tab1">
+														<div class="table-responsive">
+								<table class="table datatable-basic">
+									<thead>
+										
+											<tr>
+											<th><b>#</b></th>
+												<th><b>Course Name</b></th>
+												<th><b>Unit Name</b></th>
+												<th><b>Year</b></th>
+												<th><b>File</b></th>
+												<th><b>Status</b></th>
+										</tr>
+																	
+									</thead>
+									<tbody>
+										{% for sample in pending_papers %}
+
+
+										<tr>
+											<td>{{forloop.counter}}</td>
+											<td>{{sample.course_name}}</td>
+											<td>{{sample.unit_name}}</td>
+											<td>{{sample.unit_year}}</td>
+											<td>
+												<a href="{{sample.unit_file.url}}" style="color: black;">
+													<i class="icon-cloud-download2"></i>
+												</a>
+												 
+											<td class="">
+												
+												
+												<div class="form-check form-check-switchery">
+													<label class="form-check-label">
+														<!-- <input type="checkbox" class="form-check-input-switchery" onchange="" data-fouc> -->
+														<a href="{% url 'Lux:approve_paper' sample.id %}">Approve</a>
+														<span class="badge badge-warning">Pending</span>
+													</label>
+												</div>					
+												<!-- <a href="{{sample.unit_file.url}}"></a> -->
+											</td>
+										</tr>
+
+										{% empty %}
+
+										<tr>
+											<td colspan="7">
+												<div class="alert alert-warning text-center">
+													<i class="icon-warning mr-1"></i> Sorry no Request Found
+												</div>
+											</td>
+										</tr>
+
+										{%endfor%}
+																
+									</tbody>
+								</table>				
+							</div>
+		
+						</div>
+
+						<div class="tab-pane fade" id="bottom-justified-divided-tab2">
+
+							<div class="table-responsive">
+								<table class="table datatable-basic">
+									<thead>
+										
+											<tr>
+											<th><b>#</b></th>
+												<th><b>Course Name</b></th>
+												<th><b>Unit Name</b></th>
+												<th><b>Year</b></th>
+												<th><b>File</b></th>
+												<th><b>Status</b></th>
+										</tr>
+																	
+									</thead>
+									<tbody>
+										{% for sample in approved_papers %}
+
+
+										<tr>
+											<td>{{forloop.counter}}</td>
+											<td>{{sample.course_name}}</td>
+											<td>{{sample.unit_name}}</td>
+											<td>{{sample.unit_year}}</td>
+											<td>
+												<a href="{{sample.unit_file.url}}" style="color: black;">
+												<i class="icon-cloud-download2"></i>
+											</a></td>
+											<td class="text-center">
+												
+													<span class="badge badge-success">Approved</span>									  
+												<a href="{% url 'Lux:approve_paper' sample.id %}">Block</a>										
+											</td>
+										</tr>
+
+										{%endfor%}
+																
+									</tbody>
+								</table>				
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function () {
+$("#University").change(function () {
+	// alert('this');
+	var val = $(this).val();
+	if (val == "Moi") {
+		console.log(val);
+		$("#campus").html(
+			"<option value='Moi Main Campus'>Moi Main Campus</option><option value='Anex Campus'>Anex Campus</option>");
+		} else if (val == "Tuk") {
+		$("#campus").html(
+			"<option value='TUK Main Campus'>TUK Main Campus</option><option value='Tuk Mombasa'>Tuk Mombasa</option>");
+		} else if (val == "UON") {
+			$("#campus").html(
+				"<option value='UON Main Campus'>UON Main Campus</option><option value='UON Mombasa'>UON Mombasa</option>");
+		} else if (val == "item0") {
+			$("#size").html("<option value=''>--select one--</option>");
+		}
+});
+});
+
+
+</script>
+
+{% block scripts %}
+{% endblock scripts %}
+
+{% endblock body %}

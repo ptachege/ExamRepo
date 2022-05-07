@@ -1,0 +1,163 @@
+{% extends 'Lux/base.html' %}
+{% load static %}
+{% block header %}
+<script src="{% static 'Lux/global_assets/js/main/jquery.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/main/bootstrap.bundle.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/loaders/blockui.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/forms/selects/select2.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/plugins/forms/styling/uniform.min.js '%}"></script>
+<script src="{% static 'Lux/global_assets/js/demo_pages/form_layouts.js '%}"></script>
+
+{% endblock header %}
+
+{% block body %}
+<div class="container-fluid my-4">
+	<div class="row">
+		<div class="col-md-8 offset-md-2">
+
+			<div class="card">
+				<div class="card-body">
+					<div class="col-md-12">
+						<form action="" method="POST" enctype="multipart/form-data">
+							{% csrf_token %}
+							<fieldset>
+								<legend class="font-weight-semibold" style="font-size: 20px;"><i class="icon-user-tie mr-2"
+										style="font-size: 20px;"></i> Create Profile
+								</legend>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>First name:</label>
+											<input type="text" required name="first_name" placeholder="Eugene"
+												class="form-control border-teal border-1">
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Last name:</label>
+											<input type="text" required name="last_name" placeholder="Kopyov"
+												class="form-control border-teal border-1">
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>University:</label>
+											<select name="university" id="University" required data-placeholder="Select University" class="form-control form-control-select2" data-fouc>
+												<option></option>
+												  	<option value="">-- select one --</option>
+													<option value="Moi">Moi University</option>
+													<option value="Tuk">TUK</option>
+													<option value="UON">UON</option>
+												<!-- <option value="UOE">UOE</option> -->
+											</select>
+
+											
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Campus</label>
+											<select name="campus" id="campus" required data-placeholder="Select Campus" class="form-control">
+												<option></option>
+												  	<option value="">-- select one --</option>
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Current Semester:</label>
+											<select name="semester" required data-placeholder="Select Semester"
+												class="form-control  form-control-select2" data-fouc>
+												<option></option>
+												<option value="1.1">1.1</option>
+												<option value="1.2">1.2</option>
+												<option value="2.1">2.1</option>
+												<option value="2.2">2.2</option>
+												<option value="3.1">3.1</option>
+												<option value="3.2">3.2</option>
+												<option value="4.1">4.2</option>
+												<option value="4.2">4.2</option>
+											</select>
+										</div>
+									</div>
+
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Course Taking:</label>
+											<select name="course_taking" required data-placeholder="Select Course"
+												class="form-control  form-control-select2" data-fouc>
+												<option></option>
+												<option value="Computer Science">Computer Science</option>
+												<option value="Acturial Science">Acturial Science</option>
+												<option value="BioChestry">BioChestry</option>
+												<option value="Bacholor of Science">Bacholor of Science</option>
+												<option value="Bacholor of Science Education">Bacholor of Science Education</option>
+												<option value="Applied Statistics">Applied Statistics</option>
+												<option value="MicroBiology">MicroBiology</option>
+												
+											</select>
+										</div>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label class="d-block">Profile Images:</label>
+											<input type="file" required name="avatar" class="form-input-styled" data-fouc>
+											<span class="form-text text-muted">Accepted formats: jpg,png,jpeg 2Mb</span>
+										</div>
+									</div>
+								</div>
+								<div class="text-right">
+									<button type="submit" class="btn btn-primary">Submit form <i
+											class="icon-paperplane ml-2"></i></button>
+								</div>
+
+
+							</fieldset>
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function () {
+$("#University").change(function () {
+	// alert('this');
+	var val = $(this).val();
+	if (val == "Moi") {
+		console.log(val);
+		$("#campus").html(
+			"<option value='Moi Main Campus'>Moi Main Campus</option><option value='Anex Campus'>Anex Campus</option>");
+		} else if (val == "Tuk") {
+		$("#campus").html(
+			"<option value='TUK Main Campus'>TUK Main Campus</option><option value='Tuk Mombasa'>Tuk Mombasa</option>");
+		} else if (val == "UON") {
+			$("#campus").html(
+				"<option value='UON Main Campus'>UON Main Campus</option><option value='UON Mombasa'>UON Mombasa</option>");
+		} else if (val == "item0") {
+			$("#size").html("<option value=''>--select one--</option>");
+		}
+});
+});
+
+
+</script>
+
+{% block scripts %}
+{% endblock scripts %}
+
+{% endblock body %}
